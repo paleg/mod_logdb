@@ -2,7 +2,7 @@
 
 mod_logdb - module for [ejabberd](https://www.ejabberd.im/) for logging user messages to db (`mnesia`, `mysql`, `pgsql` now supported).
 
-Your pull requests are welcome in [github](https://github.com/paleg/ejabberd) (use recent XX.XX-mod_logdb branch).
+Your pull requests are welcome in [github](https://github.com/paleg/ejabberd) (use recent [XX.XX-mod_logdb](https://github.com/paleg/ejabberd/tree/17.04-mod_logdb) branch).
 
 ## General notes
 * module development is tracking ejabberd version shipped with **debian stable**. If you need module for recent ejabberd releases feel free to [contact me](mailto:o.palij@gmail.com)

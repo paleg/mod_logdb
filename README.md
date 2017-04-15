@@ -27,66 +27,66 @@ Download mod_logdb patch for desired ejabberd version:
 * [13.12](https://github.com/paleg/ejabberd/compare/paleg:13.12...paleg:13.12-mod_logdb.patch).
 
 Approximate sequence for 17.04 on debian jessie/stretch:
-```
-# apt-get install erlang erlang-dev automake autoconf libyaml-dev libexpat1-dev
-# cd /usr/local/src
-# wget https://www.process-one.net/downloads/downloads-action.php?file=/ejabberd/17.04/ejabberd-17.04.tgz
-# tar zxvf ejabberd-17.04.tgz
-# cd ejabberd-17.04
-# wget -q https://github.com/paleg/ejabberd/compare/paleg:17.04...paleg:17.04-mod_logdb.patch -O- | patch -p1
-# ./autogen.sh
-# ./configure --enable-user=ejabberd --enable-odbc --enable-mysql --enable-pgsql --enable-zlib --enable-iconv
-# make && make install
+```bash
+apt-get install erlang erlang-dev automake autoconf libyaml-dev libexpat1-dev
+cd /usr/local/src
+wget https://www.process-one.net/downloads/downloads-action.php?file=/ejabberd/17.04/ejabberd-17.04.tgz
+tar zxvf ejabberd-17.04.tgz
+cd ejabberd-17.04
+wget -q https://github.com/paleg/ejabberd/compare/paleg:17.04...paleg:17.04-mod_logdb.patch -O- | patch -p1
+./autogen.sh
+./configure --enable-user=ejabberd --enable-odbc --enable-mysql --enable-pgsql --enable-zlib --enable-iconv
+make && make install
 ```
 
 ### Building debian package
 
-```
-# cd /usr/local/src
-# apt-get source ejabberd
-# cd ejabberd-14.07
-# apt-get install quilt
-# export QUILT_PATCHES=debian/patches
-# quilt push -a
-# quilt new 99_patch-mod_logdb-14.07.diff
-# quilt add rebar.config.script
-# quilt add priv/msgs/nl.msg
-# quilt add priv/msgs/pl.msg
-# quilt add priv/msgs/ru.msg
-# quilt add priv/msgs/uk.msg
-# quilt add src/gen_logdb.erl
-# quilt add src/mod_logdb.erl
-# quilt add src/mod_logdb.hrl
-# quilt add src/mod_logdb_mnesia.erl
-# quilt add src/mod_logdb_mnesia_old.erl
-# quilt add src/mod_logdb_mysql.erl
-# quilt add src/mod_logdb_mysql5.erl
-# quilt add src/mod_logdb_pgsql.erl
-# quilt add src/mod_muc_room.erl
-# quilt add src/mod_roster.erl
-# wget -q https://github.com/paleg/ejabberd/compare/paleg:14.07...paleg:14.07-mod_logdb.patch -O- | patch -p1
-# quilt refresh
-# quilt pop -a
-# apt-get build-dep  ejabberd
-# apt-get install devscripts
-# debuild -uc -us
+```bash
+cd /usr/local/src
+apt-get source ejabberd
+cd ejabberd-14.07
+apt-get install quilt
+export QUILT_PATCHES=debian/patches
+quilt push -a
+quilt new 99_patch-mod_logdb-14.07.diff
+quilt add rebar.config.script
+quilt add priv/msgs/nl.msg
+quilt add priv/msgs/pl.msg
+quilt add priv/msgs/ru.msg
+quilt add priv/msgs/uk.msg
+quilt add src/gen_logdb.erl
+quilt add src/mod_logdb.erl
+quilt add src/mod_logdb.hrl
+quilt add src/mod_logdb_mnesia.erl
+quilt add src/mod_logdb_mnesia_old.erl
+quilt add src/mod_logdb_mysql.erl
+quilt add src/mod_logdb_mysql5.erl
+quilt add src/mod_logdb_pgsql.erl
+quilt add src/mod_muc_room.erl
+quilt add src/mod_roster.erl
+wget -q https://github.com/paleg/ejabberd/compare/paleg:14.07...paleg:14.07-mod_logdb.patch -O- | patch -p1
+quilt refresh
+quilt pop -a
+apt-get build-dep  ejabberd
+apt-get install devscripts
+debuild -uc -us
 ```
 
 ejabberd debian package with mod_logdb should be in `../ejabberd_14.07*.deb`
 
 If you are planning to use `mysql5` backend you should recompile `erlang-p1-mysql` package too:
-```
-# cd /usr/local/src
-# apt-get source erlang-p1-mysql
-# cd erlang-p1-mysql-0.2014.03.10/
-# export QUILT_PATCHES=debian/patches
-# quilt new 99_multi.diff
-# quilt add src/p1_mysql_auth.erl
-# wget -q https://github.com/paleg/p1_mysql/compare/paleg:1.0.2...paleg:multi.patch -O- | patch -p1
-# quilt refresh
-# quilt pop -a
-# apt-get build-dep erlang-p1-mysql
-# debuild -uc -us
+```bash
+cd /usr/local/src
+apt-get source erlang-p1-mysql
+cd erlang-p1-mysql-0.2014.03.10/
+export QUILT_PATCHES=debian/patches
+quilt new 99_multi.diff
+quilt add src/p1_mysql_auth.erl
+wget -q https://github.com/paleg/p1_mysql/compare/paleg:1.0.2...paleg:multi.patch -O- | patch -p1
+quilt refresh
+quilt pop -a
+apt-get build-dep erlang-p1-mysql
+debuild -uc -us
 ```
 
 erlang-p1-mysql debian package with multi patch applied should be in `../erlang-p1-mysql_*.deb`
@@ -96,18 +96,18 @@ Note:
 * you should use branch corresponded to ejabberd installed version
 * `EJABBERD_PREFIX` must hold path to installed ejabberd files (`/usr/lib/x86_64-linux-gnu/ejabberd` in debian).
 
-```
-# cd /usr/local/src
-# git clone https://github.com/paleg/ejabberd
-# cd ejabberd
-# git checkout 14.07-mod_logdb
-# ./autogen.sh
-# ./configure --enable-odbc --enable-mysql --enable-pgsql --enable-pam --enable-zlib --enable-json --enable-iconv --enable-lager --enable-transient_supervisors
-# make
-# cp -v ebin/mod_logdb* ${EJABBERD_PREFIX}/ebin/
-# cp ebin/mod_muc_room.beam ${EJABBERD_PREFIX}/ebin/
-# cp ebin/mod_roster.beam ${EJABBERD_PREFIX}/ebin/
-# cp priv/msgs/{nl,pl,ru,uk}.msg ${EJABBERD_PREFIX}/priv/msgs/
+```bash
+cd /usr/local/src
+git clone https://github.com/paleg/ejabberd
+cd ejabberd
+git checkout 14.07-mod_logdb
+./autogen.sh
+./configure --enable-odbc --enable-mysql --enable-pgsql --enable-pam --enable-zlib --enable-json --enable-iconv --enable-lager --enable-transient_supervisors
+make
+cp -v ebin/mod_logdb* ${EJABBERD_PREFIX}/ebin/
+cp ebin/mod_muc_room.beam ${EJABBERD_PREFIX}/ebin/
+cp ebin/mod_roster.beam ${EJABBERD_PREFIX}/ebin/
+cp priv/msgs/{nl,pl,ru,uk}.msg ${EJABBERD_PREFIX}/priv/msgs/
 ```
 
 ### FreeBSD

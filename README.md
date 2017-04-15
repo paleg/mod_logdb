@@ -4,6 +4,35 @@ mod_logdb - module for [ejabberd](https://www.ejabberd.im/) for logging user mes
 
 Your pull requests are welcome in [github](https://github.com/paleg/ejabberd) (use recent [XX.XX-mod_logdb](https://github.com/paleg/ejabberd/tree/17.04-mod_logdb) branch).
 
+**Table of Contents**
+
+- [General notes](#general-notes)
+- [Overview](#overview)
+- [Install](#install)
+    - [Manually from sources](#manually-from-sources)
+    - [Building debian package](#building-debian-package)
+    - [Installing with git (ejabberd is already installed)](#installing-with-git-ejabberd-is-already-installed)
+    - [FreeBSD](#freebsd)
+- [Configure](#configure)
+    - [Configuration examples](#configuration-examples)
+        - [YAML](#yaml)
+        - [Erlang](#erlang)
+    - [Configuration options](#configuration-options)
+        - [dbs](#dbs)
+        - [vhosts](#vhosts)
+        - [ignore_jids](#ignore_jids)
+        - [groupchat](#groupchat)
+        - [purge_older_days](#purge_older_days)
+        - [dolog_default](#dolog_default)
+        - [poll_users_setting](#poll_users_setting)
+    - [ACL configuration](#acl-configuration)
+- [Manage (ejabberdctl commands)](#manage-ejabberdctl-commands)
+    - [copy messages from given backend to current backend](#copy-messages-from-given-backend-to-current-backend)
+    - [rebuild statistics for vhost](#rebuild-statistics-for-vhost)
+- [Usage](#usage)
+    - [Ad-hoc interface](#ad-hoc-interface)
+    - [Web interface (admin)](#web-interface-admin)
+
 ## General notes
 * module development is tracking ejabberd version shipped with **debian stable**. If you need module for recent ejabberd releases feel free to [contact me](mailto:o.palij@gmail.com)
 * this module still is under development, so backward compatibility is not guaranteed
@@ -148,7 +177,9 @@ No further steps required. Just start it and it should work with mysql5 backend.
 * you have two domains `example1.org` and `example2.org`
 * you want to log messages for `example1.org` into `mysql5` and messages for `example2.org` into `mnesia`.
 
-#### YAML, indentation matters (recent XX.XX versions)
+#### YAML
+Indentation matters (recent XX.XX versions).
+
 ```yaml
 modules:
   # Other modules ...
@@ -172,7 +203,9 @@ modules:
       - "@rss.example.org"
 ```
 
-#### Erlang (old 2.x.x versions)
+#### Erlang
+Old 2.x.x versions.
+
 ```erlang
 {modules, [
   {mod_logdb, [
@@ -420,7 +453,7 @@ Copy progress will be shown in ejabberd logs.
 
 This feature was not 100% tested, so **be carefull**.
 
-### rebuilds statistics for vhost
+### rebuild statistics for vhost
 `$ ejabberdctl ejabberd@your-server vhost your-vhost-here rebuild-stats`
 
 In some rare (I hope :)) cases it is possible that statistics become corrupted, this command rebuilds statistics for vhost.

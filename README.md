@@ -110,6 +110,38 @@ Note:
 # cp priv/msgs/{nl,pl,ru,uk}.msg ${EJABBERD_PREFIX}/priv/msgs/
 ```
 
+### FreeBSD
+
+First do cleanup:
+```bash
+cd /usr/ports/net-im/ejabberd && make deinstall
+rm -rf /usr/local/lib/erlang/lib/ejabberd-*
+```
+
+Then install:
+```bash
+cd /usr/ports/net-im/ejabberd
+make patch
+cd work/deps/
+rm -rf p1_mysql*
+git clone https://github.com/paleg/p1_mysql.git && cd p1_mysql && git checkout multi
+cd /usr/ports/net-im/ejabberd/work/ejabberd-16.09/
+curl -q https://github.com/paleg/ejabberd/compare/paleg:16.04...paleg:16.04-mod_logdb.patch | patch -p1
+cd /usr/ports/net-im/ejabberd
+cat <<EOF >> pkg-plist
+%%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb.beam
+%%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/gen_logdb.beam
+%%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_mysql5.beam
+%%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_mysql.beam
+%%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_pgsql.beam
+%%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_mnesia_old.beam
+%%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_mnesia.beam
+EOF
+make install
+```
+
+No further steps required. Just start it and it should work with mysql5 backend.
+
 ## Configure
 
 ### Configuration examples

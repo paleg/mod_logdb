@@ -67,7 +67,7 @@ quilt add src/mod_roster.erl
 wget -q https://github.com/paleg/ejabberd/compare/paleg:14.07...paleg:14.07-mod_logdb.patch -O- | patch -p1
 quilt refresh
 quilt pop -a
-apt-get build-dep  ejabberd
+apt-get build-dep ejabberd
 apt-get install devscripts
 debuild -uc -us
 ```

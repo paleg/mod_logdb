@@ -87,7 +87,6 @@ quilt add src/gen_logdb.erl
 quilt add src/mod_logdb.erl
 quilt add src/mod_logdb.hrl
 quilt add src/mod_logdb_mnesia.erl
-quilt add src/mod_logdb_mnesia_old.erl
 quilt add src/mod_logdb_mysql.erl
 quilt add src/mod_logdb_mysql5.erl
 quilt add src/mod_logdb_pgsql.erl
@@ -163,7 +162,6 @@ cat <<EOF >> pkg-plist
 %%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_mysql5.beam
 %%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_mysql.beam
 %%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_pgsql.beam
-%%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_mnesia_old.beam
 %%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb_mnesia.beam
 EOF
 make install
@@ -444,10 +442,6 @@ E.g. you initially used `mysql` backend and now you want to switch to `pgsql` ba
 * make sure that both backends described in module config `dbs` section
 * reconfigure module to use `pgsql` backend
 * restart module/server, then try: `$ ejabberdctl ejabberd@your-server vhost you-vhost copy_messages mysql`
-
-If you want to switch from `mod_logmnesia` to `mod_logdb`:
-* add to dbs - `{mnesia_old, []}`
-* restart module/server and then try: `$ ejabberdctl ejabberd@your-server vhost you-vhost copy_messages mnesia_old`
 
 Copy progress will be shown in ejabberd logs.
 

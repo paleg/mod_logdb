@@ -195,7 +195,7 @@ modules:
     vhosts:
       "example1.org": mysql5
       "example2.org": mnesia
-    groupchat: half
+    groupchat: send
     dolog_default: true
     ignore_jids:
       - "bigboss@example.com"
@@ -353,7 +353,7 @@ Default value - `none`.
 
 Examples:
 ```yaml
-groupchat: half
+groupchat: all
 ```
 ```erlang
 {groupchat, send}

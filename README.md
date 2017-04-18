@@ -436,12 +436,14 @@ access:
 ## Manage (ejabberdctl commands)
 
 ### copy messages from given backend to current backend
-`$ ejabberdctl ejabberd@your-server vhost you-vhost-here copy_messages backend [date]`
+`$ ejabberdctl ejabberd@your-server vhost you-vhost-here copy_messages backend <date>|all`
 
 E.g. you initially used `mysql` backend and now you want to switch to `pgsql` backend:
 * make sure that both backends described in module config `dbs` section
 * reconfigure module to use `pgsql` backend
-* restart module/server, then try: `$ ejabberdctl ejabberd@your-server vhost you-vhost copy_messages mysql`
+* restart module/server, then try:
+    + for all stored messages - `$ ejabberdctl ejabberd@your-server vhost you-vhost copy_messages mysql all`
+    + for messages at given date - `$ ejabberdctl ejabberd@your-server vhost you-vhost copy_messages mysql 2016-9-4`
 
 Copy progress will be shown in ejabberd logs.
 

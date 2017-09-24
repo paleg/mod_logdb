@@ -59,10 +59,10 @@ Approximate sequence for 17.04 on debian jessie/stretch:
 ```bash
 apt-get install erlang erlang-dev automake autoconf libyaml-dev libexpat1-dev
 cd /usr/local/src
-wget https://www.process-one.net/downloads/downloads-action.php?file=/ejabberd/17.04/ejabberd-17.04.tgz
+wget https://www.process-one.net/downloads/downloads-action.php?file=/ejabberd/17.04/ejabberd-17.04.tgz --trust-server-names
 tar zxvf ejabberd-17.04.tgz
 cd ejabberd-17.04
-wget -q https://github.com/paleg/ejabberd/compare/paleg:17.04...paleg:17.04-mod_logdb.patch -O- | patch -p1
+curl -q https://github.com/paleg/ejabberd/compare/paleg:17.04...paleg:17.04-mod_logdb.patch | patch -p1 --remove-empty-files
 ./autogen.sh
 ./configure --enable-user=ejabberd --enable-odbc --enable-mysql --enable-pgsql --enable-zlib --enable-iconv
 make && make install
@@ -92,7 +92,7 @@ quilt add src/mod_logdb_mysql5.erl
 quilt add src/mod_logdb_pgsql.erl
 quilt add src/mod_muc_room.erl
 quilt add src/mod_roster.erl
-wget -q https://github.com/paleg/ejabberd/compare/paleg:14.07...paleg:14.07-mod_logdb.patch -O- | patch -p1
+curl -q https://github.com/paleg/ejabberd/compare/paleg:14.07...paleg:14.07-mod_logdb.patch | patch -p1 --remove-empty-files
 quilt refresh
 quilt pop -a
 apt-get build-dep ejabberd
@@ -110,7 +110,7 @@ cd erlang-p1-mysql-0.2014.03.10/
 export QUILT_PATCHES=debian/patches
 quilt new 99_multi.diff
 quilt add src/p1_mysql_auth.erl
-wget -q https://github.com/paleg/p1_mysql/compare/paleg:1.0.2...paleg:multi.patch -O- | patch -p1
+curl -q https://github.com/paleg/p1_mysql/compare/paleg:1.0.2...paleg:multi.patch | patch -p1 --remove-empty-files
 quilt refresh
 quilt pop -a
 apt-get build-dep erlang-p1-mysql
@@ -153,8 +153,8 @@ make patch
 cd work/deps/
 rm -rf p1_mysql*
 git clone https://github.com/paleg/p1_mysql.git && cd p1_mysql && git checkout multi
-cd /usr/ports/net-im/ejabberd/work/ejabberd-16.09/
-curl -q https://github.com/paleg/ejabberd/compare/paleg:16.04...paleg:16.04-mod_logdb.patch | patch -p1
+cd /usr/ports/net-im/ejabberd/work/ejabberd-*/
+curl -q https://github.com/paleg/ejabberd/compare/paleg:17.04...paleg:17.04-mod_logdb.patch | patch -p1 --remove-empty-files
 cd /usr/ports/net-im/ejabberd
 cat <<EOF >> pkg-plist
 %%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb.beam

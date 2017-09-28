@@ -150,9 +150,11 @@ Then install:
 ```bash
 cd /usr/ports/net-im/ejabberd
 make patch
-cd work/deps/
-rm -rf p1_mysql*
-git clone https://github.com/paleg/p1_mysql.git && cd p1_mysql && git checkout multi
+cd work/deps/p1_mysql
+tag=$(git describe --tags --abbrev=0)
+cd ..
+rm -rf p1_mysql
+git clone https://github.com/paleg/p1_mysql.git && cd p1_mysql && git checkout ${tag}_multi
 cd /usr/ports/net-im/ejabberd/work/ejabberd-*/
 curl -q https://github.com/paleg/ejabberd/compare/paleg:17.04...paleg:17.04-mod_logdb.patch | patch -p1 --remove-empty-files
 cd /usr/ports/net-im/ejabberd

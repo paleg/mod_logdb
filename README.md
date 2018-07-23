@@ -49,6 +49,7 @@ Your pull requests are welcome in [github](https://github.com/paleg/ejabberd) (u
 
 ### Manually from sources
 Download mod_logdb patch for desired ejabberd version:
+* [18.06](https://github.com/paleg/ejabberd/compare/paleg:18.06...paleg:18.06-mod_logdb.patch) (should be compatible from 18.06)
 * [17.04](https://github.com/paleg/ejabberd/compare/paleg:17.04...paleg:17.04-mod_logdb.patch) (should be compatible from 17.04)
 * [16.04](https://github.com/paleg/ejabberd/compare/paleg:16.04...paleg:16.04-mod_logdb.patch) (should be compatible from 16.04)
 * [15.07](https://github.com/paleg/ejabberd/compare/paleg:15.07...paleg:15.07-mod_logdb.patch) (should be compatible from 15.06)
@@ -150,13 +151,13 @@ Then install:
 ```bash
 cd /usr/ports/net-im/ejabberd
 make patch
-cd work/deps/p1_mysql
-tag=$(git describe --tags --abbrev=0)
-cd ..
+cd work
+tag=$(echo p1_mysql-* | cut -d '-' -f 2)
+cd ejabberd-*/deps/
 rm -rf p1_mysql
 git clone https://github.com/paleg/p1_mysql.git && cd p1_mysql && git checkout ${tag}_multi
 cd /usr/ports/net-im/ejabberd/work/ejabberd-*/
-curl -q https://github.com/paleg/ejabberd/compare/paleg:17.04...paleg:17.04-mod_logdb.patch | patch -p1 --remove-empty-files
+curl -q https://github.com/paleg/ejabberd/compare/paleg:18.06...paleg:18.06-mod_logdb.patch | patch -p1 --remove-empty-files
 cd /usr/ports/net-im/ejabberd
 cat <<EOF >> pkg-plist
 %%EJABBERD_LIBDIR%%/%%PORTNAME%%-%%PORTVERSION%%/ebin/mod_logdb.beam

@@ -49,6 +49,7 @@ Your pull requests are welcome in [github](https://github.com/paleg/ejabberd) (u
 
 ### Manually from sources
 Download mod_logdb patch for desired ejabberd version:
+* [21.04](https://github.com/paleg/ejabberd/compare/paleg:21.04...paleg:21.04-mod_logdb.patch) (should be compatible from 21.04)
 * [18.06](https://github.com/paleg/ejabberd/compare/paleg:18.06...paleg:18.06-mod_logdb.patch) (should be compatible from 18.06)
 * [17.04](https://github.com/paleg/ejabberd/compare/paleg:17.04...paleg:17.04-mod_logdb.patch) (should be compatible from 17.04)
 * [16.04](https://github.com/paleg/ejabberd/compare/paleg:16.04...paleg:16.04-mod_logdb.patch) (should be compatible from 16.04)
